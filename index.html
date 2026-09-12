@@ -160,14 +160,23 @@
   .ind{position:absolute;top:13px;right:14px;font-family:var(--mono);font-size:14px;color:var(--accent);opacity:0;transform:translate(-2px,2px);transition:.25s}
   .content:hover .ind,.content:focus-visible .ind{opacity:1;transform:none}
   .kick{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--sub)}
+  .sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
   .dot{width:11px;height:11px;border-radius:50%;background:var(--accent);flex-shrink:0;display:block}
 
-  .c-scry{grid-area:scry;--accent:var(--blue);padding:24px;display:flex;flex-direction:column}
+  .c-scry{grid-area:scry;--accent:var(--blue);padding:24px 24px 0;display:flex;flex-direction:column}
+  .scry-peek{position:relative;display:block;margin:16px auto 0;width:min(62%,172px);height:122px;flex:0 0 auto;
+    border-radius:22px 22px 0 0;overflow:hidden;background:#1C2426;border:1.5px solid color-mix(in srgb,var(--accent) 45%,var(--line));border-bottom:0;
+    box-shadow:0 -12px 32px -14px rgba(0,0,0,.5);transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+  .scry-peek::before{content:"";position:absolute;z-index:2;left:50%;top:6px;transform:translateX(-50%);width:24%;height:6px;border-radius:999px;
+    background:color-mix(in srgb,var(--accent) 45%,var(--line))}  /* Dynamic Island, matched to the frame border */
+  .scry-peek img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;transition:opacity .7s ease}
+  .scry-peek img.hide{opacity:0}
+  .c-scry:hover .scry-peek,.c-scry:focus-visible .scry-peek{transform:translateY(-6px)}
   .scry-badge{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;border:1.5px solid var(--accent);color:var(--accent);
     padding:4px 9px;border-radius:7px;align-self:flex-start}
-  .scry-mark{font-family:var(--disp);font-weight:900;font-size:clamp(34px,4.4vw,56px);letter-spacing:-.03em;line-height:.95;margin-top:auto}
-  .scry-tag{font-size:clamp(14px,1.5vw,16px);color:var(--ink);margin-top:6px;max-width:22ch}
-  .scry-open{margin-top:14px;font-family:var(--mono);font-size:11.5px;color:var(--accent);letter-spacing:.03em}
+  .scry-mark{font-family:var(--disp);font-weight:900;font-size:clamp(32px,4vw,50px);letter-spacing:-.03em;line-height:.95;margin-top:8px}
+  .scry-tag{font-size:clamp(13px,1.3vw,14.5px);line-height:1.45;color:var(--ink);margin-top:6px;max-width:24ch}
+  .scry-open{margin-top:12px;font-family:var(--mono);font-size:11.5px;color:var(--accent);letter-spacing:.03em}
 
   .c-currently{grid-area:curr;--accent:var(--green);padding:24px;display:flex;flex-direction:column;gap:12px}
   .c-currently .cur-top{display:flex;align-items:center;gap:9px}
@@ -180,9 +189,12 @@
 
   .c-clients{grid-area:clients;--accent:var(--teal);padding:16px;display:flex;flex-direction:column;gap:10px}
 
-  .c-think{grid-area:think;--accent:var(--purple);padding:24px;display:flex;flex-direction:column;justify-content:center}
+  .c-think{grid-area:think;--accent:var(--red);padding:24px;display:flex;flex-direction:column;justify-content:center;
+    background:transparent;border-color:transparent;box-shadow:none}  /* the one card that is a different material: a note sitting on the paper */
+  .c-think:hover{background:color-mix(in srgb,var(--card) 55%,transparent)}
   .c-think .q{font-family:var(--disp);font-weight:800;font-size:clamp(20px,2.5vw,30px);line-height:1.12;letter-spacing:-.025em}
-  .c-think .q b{color:var(--accent);font-weight:800}
+  .c-think .q b{color:var(--accent);font-weight:800;padding-bottom:3px;box-decoration-break:clone;-webkit-box-decoration-break:clone;
+    background:url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 60 6%27 preserveAspectRatio=%27none%27%3E%3Cpath d=%27M1 4.2C9 1.2 15 5.4 24 3.1S40 1.2 59 4%27 fill=%27none%27 stroke=%27%23E0472C%27 stroke-width=%271.9%27 stroke-linecap=%27round%27/%3E%3C/svg%3E") no-repeat left 100%/100% 5px}
   .c-think .by{font-family:var(--mono);font-size:11px;color:var(--sub);margin-top:12px;letter-spacing:.04em}
 
   .c-toolkit{grid-area:toolkit;--accent:var(--orange);padding:16px;display:flex;flex-direction:column;gap:10px}
@@ -191,18 +203,25 @@
     border:1px solid color-mix(in srgb,var(--accent) 40%,var(--line));background:color-mix(in srgb,var(--accent) 9%,var(--card));color:var(--ink)}
   .c-toolkit .glyphs svg{width:16px;height:16px}
 
-  .c-path{grid-area:path;--accent:var(--red);padding:16px 16px 12px;display:flex;flex-direction:column;gap:10px;overflow:hidden}
+  .c-path{grid-area:path;--accent:var(--purple);padding:16px 16px 12px;display:flex;flex-direction:column;gap:10px;overflow:hidden}
+  html[data-theme="dark"] .c-path{--accent:var(--yellow)}  /* the one card that flips accent with the theme (like the profile photo): yellow 7.8:1 on dark, purple 4.4:1 on light */
   .tl-vp{position:relative;flex:1;min-height:0;overflow:hidden;-webkit-mask:linear-gradient(180deg,transparent,#000 15%,#000 85%,transparent);mask:linear-gradient(180deg,transparent,#000 15%,#000 85%,transparent)}
   .tl-track{position:absolute;left:0;top:0;width:100%;display:flex;flex-direction:column;animation:tlscroll 14s linear infinite;will-change:transform}
   .tl-vp:hover .tl-track{animation-play-state:paused}
   @keyframes tlscroll{from{transform:translateY(0)}to{transform:translateY(-50%)}}
-  .tl-row{position:relative;padding:8px 0 8px 20px}
+  .tl-row{position:relative;padding:9px 0 9px 22px}
   .tl-row::before{content:"";position:absolute;left:3px;top:0;bottom:0;width:2px;background:color-mix(in srgb,var(--accent) 38%,var(--line))}
-  .tl-node{position:absolute;left:0;top:13px;width:8px;height:8px;border-radius:2px;background:var(--accent);box-shadow:0 0 0 3px var(--card)}
-  .tl-place{font-family:var(--disp);font-weight:800;font-size:15px;line-height:1.1;color:var(--ink)}
-  .tl-year{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--accent);margin-left:7px}
-  .tl-role{display:block;font-family:var(--mono);font-size:10px;color:var(--sub);margin-top:3px;letter-spacing:.02em}
+  .tl-node{position:absolute;left:0;top:14px;width:8px;height:8px;border-radius:2px;background:var(--accent);box-shadow:0 0 0 3px var(--card)}
+  .tl-place{font-family:var(--disp);font-weight:800;font-size:16px;line-height:1.1;color:var(--ink)}
+  .tl-year{font-family:var(--mono);font-size:12.5px;font-weight:700;color:var(--accent);margin-left:8px}
+  .tl-role{display:block;font-family:var(--mono);font-size:11.5px;color:var(--sub);margin-top:4px;letter-spacing:.02em}
   .tl-row.now .tl-place{color:var(--accent)}
+  /* the line starts at the first node and ENDS at the current node — the loop copy begins fresh below a gap */
+  .tl-row:first-child::before,.tl-row.now+.tl-row::before{top:18px}
+  .tl-row.now::before{bottom:auto;height:18px}
+  .tl-row.now{padding-bottom:26px}
+  .tl-row.now .tl-node{border-radius:50%;width:10px;height:10px;left:-1px;top:13px;animation:nowPulse 2.4s ease-out infinite}
+  @keyframes nowPulse{0%{box-shadow:0 0 0 3px var(--card),0 0 0 4px color-mix(in srgb,var(--accent) 55%,transparent)}70%,100%{box-shadow:0 0 0 3px var(--card),0 0 0 10px color-mix(in srgb,var(--accent) 0%,transparent)}}
   /* contact card + d20 */
   .c-contact{grid-area:contact;--accent:var(--blue);padding:16px;display:flex;flex-direction:column;gap:3px;justify-content:center}
   .contact-sub{font-family:var(--disp);font-weight:800;font-size:15px;color:var(--ink);margin-bottom:9px}
@@ -319,22 +338,30 @@
   .skill-all{font-family:var(--mono);font-size:10.5px;color:var(--sub);letter-spacing:.02em}
   .ai-line{display:flex;align-items:center;gap:9px}
   .ai-spark{width:20px;height:20px;color:var(--accent);flex-shrink:0;overflow:visible}
-  .ai-spark .spk{transform-origin:12px 12px;transition:transform .55s cubic-bezier(.34,1.4,.5,1),opacity .4s ease}
-  .ai-spark .spk path{transform-box:fill-box;transform-origin:center}
-  /* idle: single gentle twinkle on the main star, satellites hidden on top of it */
-  .ai-spark .spk-main{animation:twinkle 2.6s ease-in-out infinite}
-  .ai-spark .spk-s1,.ai-spark .spk-s2{opacity:0;transform:scale(.18)}
-  @keyframes twinkle{0%,100%{transform:rotate(0) scale(1);opacity:.9}50%{transform:rotate(45deg) scale(1.12);opacity:1}}
-  /* working: main star spins faster while the word is generated */
-  .ai-spark.work .spk-main{animation:twinkle-fast .7s ease-in-out infinite}
-  @keyframes twinkle-fast{0%,100%{transform:rotate(0) scale(.9)}50%{transform:rotate(50deg) scale(1.18)}}
-  /* split: three stars — main stays, satellites fan out (upper-left + lower-right) */
-  .ai-spark.split .spk-s1{opacity:.85;transform:translate(-7px,-6px) scale(.5)}
-  .ai-spark.split .spk-s2{opacity:.7;transform:translate(7px,6px) scale(.42)}
-  .ai-spark.split .spk-main{animation:none;transform:scale(1.04)}
-  .ai-spark.split .spk-s1 path{animation:satTw 1.5s ease-in-out infinite}
-  .ai-spark.split .spk-s2 path{animation:satTw 1.5s ease-in-out infinite .5s}
-  @keyframes satTw{0%,100%{transform:rotate(0) scale(1)}50%{transform:rotate(40deg) scale(1.25)}}
+  /* two layers: .churn = an organic blob (three lobes fused by a goo filter) that works while a word is generated;
+     .idea = the spark the blob resolves into. Original mark; no third-party glyph.
+     Keyframe animations live on the inner <path>; state TRANSITIONS live on the <g> — kept on separate elements so
+     removing an animation never snaps the values a transition is about to ease from. */
+  .ai-spark .churn,.ai-spark .idea{transform-origin:12px 12px}
+  .ai-spark .ch{transform-origin:12px 12px}
+  .ai-spark .churn{opacity:0;transform:scale(.55);transition:opacity .6s ease,transform .65s cubic-bezier(.34,1.3,.5,1)}
+  .ai-spark .idea{opacity:1;transform:none;filter:blur(0);transition:opacity .55s ease .25s,transform .75s cubic-bezier(.34,1.3,.5,1),filter .45s ease}
+  .ai-spark .idea path{transform-box:fill-box;transform-origin:center;animation:twinkle 2.6s ease-in-out infinite}
+  @keyframes twinkle{0%,100%{transform:rotate(0) scale(1)}50%{transform:rotate(45deg) scale(1.12)}}
+  /* working: the star blurs first, then fades, while the blob blooms underneath it */
+  .ai-spark.work .idea{opacity:0;transform:scale(.75) rotate(20deg);filter:blur(2.4px)}
+  .ai-spark.work .churn{opacity:1;transform:scale(1);transition-delay:.1s}
+  .ai-spark.work .ch1{animation:churnA .9s ease-in-out infinite}
+  .ai-spark.work .ch2{animation:churnB 1.15s ease-in-out infinite}
+  .ai-spark.work .ch3{animation:churnC .75s ease-in-out infinite}
+  @keyframes churnA{0%,100%{transform:translate(-4px,-2.2px) scale(1)}50%{transform:translate(3.4px,2.6px) scale(1.18)}}
+  @keyframes churnB{0%,100%{transform:translate(3.8px,-3px) scale(.92)}50%{transform:translate(-3.2px,3.6px) scale(1.22)}}
+  @keyframes churnC{0%,100%{transform:translate(0,4.2px) scale(1.1)}50%{transform:translate(1px,-4px) scale(.88)}}
+  /* idea lands: blob recedes, star re-sharpens from a blur (transform+blur on the path, opacity on the group) */
+  .ai-spark.split .churn{opacity:0;transform:scale(.45);transition-delay:0s}
+  .ai-spark.split .idea{opacity:1;transform:none;filter:blur(0);transition-delay:0s}
+  .ai-spark.split .idea path{animation:ideaPop .85s cubic-bezier(.34,1.45,.5,1) both}
+  @keyframes ideaPop{0%{transform:scale(.6) rotate(-24deg);filter:blur(2.6px)}55%{filter:blur(.4px)}100%{transform:scale(1) rotate(0);filter:blur(0)}}
   .tw-ai{min-height:1.3em;
     background:linear-gradient(100deg,var(--teal) 28%,color-mix(in srgb,var(--teal) 55%,#fff) 50%,var(--teal) 72%);
     background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
@@ -618,8 +645,8 @@
     .bento{grid-template-columns:repeat(2,1fr);grid-auto-rows:150px;gap:16px;
       grid-template-areas:
         "curr curr" "curr curr"
-        "clients contact"
         "scry books" "scry books"
+        "clients contact"
         "think think"
         "toolkit ai"
         "movies path" "movies weather"
@@ -627,7 +654,7 @@
   }
   @media (max-width:560px){
     .bento{grid-template-columns:1fr;grid-auto-rows:minmax(120px,auto);gap:16px;
-      grid-template-areas:"curr" "clients" "contact" "scry" "think" "toolkit" "ai" "movies" "books" "path" "weather" "music";}
+      grid-template-areas:"curr" "scry" "clients" "contact" "think" "toolkit" "ai" "movies" "books" "path" "weather" "music";}
     .c-currently{min-height:230px}.c-scry{min-height:210px}.c-movies,.c-books{min-height:340px}
     .grid3{grid-template-columns:1fr}.routes,.sev{grid-template-columns:1fr}
   }
@@ -661,6 +688,7 @@
         <span class="scry-mark">SCRY</span>
         <span class="scry-tag">A game discovery app built around trust, taste, and the hunt for what to play next.</span>
         <span class="scry-open">Open the full story ↗</span>
+        <span class="scry-peek" aria-hidden="true"><img id="scryPeekA" alt=""><img id="scryPeekB" alt=""></span>
       </button>
 
       <button class="card content c-currently" data-modal="currently" aria-haspopup="dialog">
@@ -681,7 +709,7 @@
       <button class="card content c-think" data-modal="think" aria-haspopup="dialog">
         <span class="ind">↗</span>
         <span class="q">Complexity is not the problem. <b>Losing the user is.</b></span>
-        <span class="by">— how I think</span>
+        <span class="by sr-only">— how I think</span>
       </button>
 
       <button class="card content c-toolkit" data-modal="toolkit" aria-haspopup="dialog">
@@ -697,7 +725,7 @@
         <span class="kick">AI in my process</span>
         <span class="skill-wrap">
           <span class="ai-line">
-            <svg class="ai-spark" id="aiSpark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><g class="spk spk-s2"><path d="M12 2.4c.62 4.94 4.04 8.36 8.98 8.98C16.04 12 12.62 15.42 12 20.36 11.38 15.42 7.96 12 3.02 11.38 7.96 10.76 11.38 7.34 12 2.4Z"/></g><g class="spk spk-s1"><path d="M12 2.4c.62 4.94 4.04 8.36 8.98 8.98C16.04 12 12.62 15.42 12 20.36 11.38 15.42 7.96 12 3.02 11.38 7.96 10.76 11.38 7.34 12 2.4Z"/></g><g class="spk spk-main"><path d="M12 2.4c.62 4.94 4.04 8.36 8.98 8.98C16.04 12 12.62 15.42 12 20.36 11.38 15.42 7.96 12 3.02 11.38 7.96 10.76 11.38 7.34 12 2.4Z"/></g></svg>
+            <svg class="ai-spark" id="aiSpark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><defs><filter id="aiGoo" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur in="SourceGraphic" stdDeviation="1.1" result="b"/><feColorMatrix in="b" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 9 -3"/></filter></defs><g class="churn" filter="url(#aiGoo)"><circle class="ch ch1" cx="12" cy="12" r="4.8"/><circle class="ch ch2" cx="12" cy="12" r="4.1"/><circle class="ch ch3" cx="12" cy="12" r="3.6"/></g><g class="idea"><path d="M12 2.4c.62 4.94 4.04 8.36 8.98 8.98C16.04 12 12.62 15.42 12 20.36 11.38 15.42 7.96 12 3.02 11.38 7.96 10.76 11.38 7.34 12 2.4Z"/></g></svg>
             <span class="tw tw-ai" id="twAi" aria-hidden="true"></span>
           </span>
         </span>
@@ -717,7 +745,7 @@
 
       <div class="card c-movies">
         <div class="shelf">
-          <span class="kick">Movies I love</span>
+          <span class="kick sr-only">Movies I love</span>
           <div class="poster" id="moviesPoster">
             <img id="moviesImg" alt="">
             <div class="pmeta"><div class="t" id="moviesT"></div><div class="s" id="moviesS"></div></div>
@@ -728,7 +756,7 @@
 
       <div class="card c-books">
         <div class="shelf">
-          <span class="kick">Books I'm reading</span>
+          <span class="kick sr-only">Books I'm reading</span>
           <div class="poster" id="booksPoster">
             <img id="booksImg" alt="">
             <div class="pmeta"><div class="t" id="booksT"></div><div class="s" id="booksS"></div></div>
@@ -876,7 +904,7 @@
     <p class="m-body">That means users know where they are, what just happened, what matters, and what they can do next. It means the product gives enough structure to build confidence without getting in the way.</p>
     <p class="m-body">I use research, systems thinking, prototyping, UX writing, and design systems to make that happen. Systems matter because they help teams move faster, stay aligned, and build with confidence. But a system should support better decisions, not protect old ones. When a pattern gets in the way of a better user experience, the pattern should change.</p>
     <p class="m-body2">My goal is to design products that are clear under pressure, trustworthy, built for real use, and hard to misuse.</p>
-    <div class="chips" style="--accent:var(--purple)">
+    <div class="chips">
       <span>Systems thinking</span><span>UX writing</span><span>Product strategy</span><span>Research synthesis</span>
       <span>Interaction design</span><span>Design systems</span><span>Edge cases</span><span>Stakeholder alignment</span>
     </div>
@@ -916,7 +944,7 @@
   <template id="m-path">
     <p class="m-kick">The path</p>
     <h2 class="m-title" id="mtitle">How I got here.</h2>
-    <ul class="tl" style="--accent:var(--red)">
+    <ul class="tl">
       <li><span class="node"></span><div class="role">Appalachian State University <span>— B.S., Product Design</span></div><div class="when">2012 – 2018</div><div class="tl-desc">Where I learned to think in systems, materials, constraints, and real-world use before moving fully into digital product design.</div></li>
       <li><span class="node"></span><div class="role">WestRock <span>— Structural Designer · Healthcare packaging</span></div><div class="when">Jul '18 – Feb '21</div><div class="tl-desc">Designed packaging systems for regulated healthcare contexts, where details, constraints, sustainability, and usability mattered before I ever had &ldquo;UX&rdquo; in my title.</div></li>
       <li><span class="node"></span><div class="role">Springboard <span>— UX/UI Design</span></div><div class="when">Nov '20 – Jul '21</div><div class="tl-desc">Formalized the shift into digital product design through research, interaction design, prototyping, testing, and portfolio case study work.</div></li>
@@ -2016,20 +2044,28 @@ const ASSETS = {"scry": {"wires":[{"k":"w01","cap":"Sign in","uri":"data:image/w
     (function cycle(){
       spark.classList.add("work");spark.classList.remove("split");
       el.style.transition="none";el.style.opacity="0";el.textContent="";
-      setTimeout(()=>{spark.classList.remove("work");spark.classList.add("split");   // word generated → split into 3
+      setTimeout(()=>{spark.classList.remove("work");spark.classList.add("split");   // word generated → blob sharpens into the spark
         const w=rndNext(AITOOLS,last);last=w;
         el.textContent=w;el.style.transition="opacity .5s ease";el.style.opacity="1";
         setTimeout(()=>{spark.classList.remove("split");                              // word fades → absorb back to 1
           el.style.opacity="0";setTimeout(cycle,650);},1900);
-      },850);
+      },1500);
     })();
   }
   aiCard();
+  // SCRY card: live peek — cycles the real hi-fi screens already inlined for the case study (no extra bytes)
+  (function scryPeek(){
+    const a=document.getElementById("scryPeekA"),b=document.getElementById("scryPeekB");if(!a||!b||typeof ASSETS==="undefined"||!ASSETS.scry)return;
+    const skip=new Set(["h01","h02","h12"]);const shots=(ASSETS.scry.hifis||[]).filter(s=>!skip.has(s.k)).map(s=>s.uri);if(!shots.length)return;
+    let i=0,front=a,back=b;a.src=shots[0];b.classList.add("hide");
+    if(reduce||shots.length<2)return;
+    setInterval(()=>{i=(i+1)%shots.length;back.src=shots[i];back.classList.remove("hide");front.classList.add("hide");[front,back]=[back,front];},2600);
+  })();
 
   // "The Path" — vertical timeline tease (full version lives in the modal)
   (function buildTimeline(){
     const track=document.getElementById("tlTrack");if(!track)return;
-    const stops=[["Appalachian State","'12","Product Design"],["WestRock","'18","Structural Designer"],["Springboard","'20","UX/UI Design"],["CapTech","'21","Interaction Designer"],["Mobelux","'22","UX Designer"],["GetWyz","'25","Senior UX Designer"]];
+    const stops=[["App State","'12","Product Design"],["WestRock","'18","Structural Designer"],["Springboard","'20","UX/UI Design"],["CapTech","'21","Interaction Designer"],["Mobelux","'22","UX Designer"],["GetWyz","'25","Senior UX Designer"]];
     function seq(frag){stops.forEach((s,i)=>{
       const row=document.createElement("div");row.className="tl-row"+(i===stops.length-1?" now":"");
       row.innerHTML='<span class="tl-node"></span><span class="tl-place">'+s[0]+'<span class="tl-year">'+s[1]+'</span></span><span class="tl-role">'+s[2]+'</span>';
@@ -2320,8 +2356,8 @@ const ASSETS = {"scry": {"wires":[{"k":"w01","cap":"Sign in","uri":"data:image/w
     if(lastFocus&&lastFocus.focus)lastFocus.focus();
   }
   document.querySelectorAll(".content[data-modal]").forEach(card=>{
-    const id=card.dataset.modal,wide=card.dataset.wide,accent=getComputedStyle(card).getPropertyValue("--accent").trim();
-    card.addEventListener("click",()=>openModal(id,wide,accent));
+    const id=card.dataset.modal,wide=card.dataset.wide;
+    card.addEventListener("click",()=>openModal(id,wide,getComputedStyle(card).getPropertyValue("--accent").trim()));  // read live so theme-flipping accents carry into the pop-up
   });
   const resumeOpenBtn=document.getElementById("resumeOpen");
   if(resumeOpenBtn)resumeOpenBtn.addEventListener("click",()=>openModal("resume",false,"var(--blue)"));
