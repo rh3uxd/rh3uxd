@@ -491,13 +491,13 @@
   .tl .tl-desc{margin-top:5px;font-size:13.5px;line-height:1.55;color:var(--sub);max-width:58ch}
 
   /* SCRY case study */
-  .cs{max-width:none}
+  .cs{max-width:none;--measure:none}
   .cs h3{font-family:var(--disp);font-weight:900;font-size:clamp(19px,2.2vw,26px);letter-spacing:-.02em;margin:34px 0 4px;line-height:1.1}
   .cs h3:first-of-type{margin-top:26px}
   .cs h4{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--sub);margin:22px 0 6px}
-  .cs p{font-size:15px;line-height:1.62;color:var(--ink);max-width:68ch;margin-top:10px}
+  .cs p{font-size:15px;line-height:1.62;color:var(--ink);max-width:var(--measure);margin-top:10px}
   .cs .lead{font-size:17px;color:var(--ink)}
-  .cs ul.cs-list{margin:12px 0 0;padding-left:0;list-style:none;max-width:68ch}
+  .cs ul.cs-list{margin:12px 0 0;padding-left:0;list-style:none;max-width:var(--measure)}
   .cs ul.cs-list li{position:relative;padding:7px 0 7px 22px;border-top:1px solid var(--line);font-size:14.5px;line-height:1.5}
   .cs ul.cs-list li::before{content:"";position:absolute;left:2px;top:14px;width:8px;height:8px;border-radius:50%;background:var(--accent)}
   .cs ul.cs-list li:last-child{border-bottom:1px solid var(--line)}
@@ -510,7 +510,7 @@
   .cs-hero .tg{font-size:15px;color:#d3ccbd}
   .cs-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
   .cs-tags span{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;color:#bdb6a6;border:1px solid rgba(236,230,216,.22);padding:4px 9px;border-radius:6px}
-  .callout{margin-top:16px;padding:16px 18px;border-left:3px solid var(--accent);background:color-mix(in srgb,var(--accent) 8%,var(--paper));border-radius:0 12px 12px 0;font-size:15px;line-height:1.55;max-width:68ch}
+  .callout{margin-top:16px;padding:16px 18px;border-left:3px solid var(--accent);background:color-mix(in srgb,var(--accent) 8%,var(--paper));border-radius:0 12px 12px 0;font-size:15px;line-height:1.55;max-width:var(--measure)}
   .callout b{color:color-mix(in srgb,var(--accent) 72%,var(--ink))}
   .pull{margin:24px 0;font-family:var(--disp);font-weight:700;font-size:clamp(18px,2.4vw,26px);line-height:1.28;letter-spacing:-.02em;max-width:24ch}
   .pull.pull--center{max-width:32ch;margin-left:auto;margin-right:auto;text-align:center}
